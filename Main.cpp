@@ -30,19 +30,21 @@ vector<Pintura*> agregarPintura();
 
 void liberarMatriz(string**);
 
+string** llenarMatrizP(string**, int);
+
 string** mat();
 
 void imprimirMatriz(string**);
 
 int main(){
     int opcion;
+    string** matriz = NULL;
+    vector<Carros*> carro;
+    vector<Chasis*> chasis;
+    vector<Motor*> motor;
+    vector<Pintura*> pintura;
+    matriz = mat();
     do{
-        vector<Carros*> carro;
-        vector<Chasis*> chasis;
-        vector<Motor*> motor;
-        vector<Pintura*> pintura;
-        string** matriz = NULL;
-        matriz = mat();
         int cont = 0;
         // int sizeCarros*** carro;
         opcion = menu();
@@ -57,7 +59,8 @@ int main(){
                 chasis = agregarChasis();
                 motor = agregarMotor();
                 pintura = agregarPintura();
-                matriz[cont][0] = "[P]";
+                matriz = llenarMatrizP(matriz, cont);
+                imprimirMatriz(matriz);
                 cont++;
                 cout<<"Se ha agregado la línea de producción correctamente"<<endl;
             }else{
@@ -70,15 +73,16 @@ int main(){
             imprimirMatriz(matriz);
             cout<<"-------------------------"<<endl;
         }
-        for (int i = 0; i < carro.size(); i++)
+        
+    }while(opcion!=6);
+    for (int i = 0; i < carro.size(); i++)
         {
             delete carro[i];
             delete chasis[i];
             delete motor[i];
             delete pintura[i];
         }
-        liberarMatriz(matriz);
-    }while(opcion!=6);
+    liberarMatriz(matriz);
     return 0;
 }
 
@@ -181,13 +185,18 @@ void liberarMatriz(string** mat){
         delete[] mat;
 }
 
-void imprimirMatriz(string** mat){
+void imprimirMatriz(string** matriz){
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 5; j++)
         {
-            cout<<mat[i][j]<<" ";
+            cout<<matriz[i][j]<<" ";
         }
         cout<<endl;
     }   
+}
+
+string** llenarMatrizP(string** mat, int cont){
+    mat[cont][0] = "[P]";
+    return mat;
 }
