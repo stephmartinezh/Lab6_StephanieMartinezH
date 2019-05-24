@@ -28,6 +28,12 @@ vector<Motor*> agregarMotor();
 
 vector<Pintura*> agregarPintura();
 
+void liberarMatriz(string**);
+
+string** mat();
+
+void imprimirMatriz(string**);
+
 int main(){
     int opcion;
     do{
@@ -35,9 +41,10 @@ int main(){
         vector<Chasis*> chasis;
         vector<Motor*> motor;
         vector<Pintura*> pintura;
-        
+        string** matriz = NULL;
+        matriz = mat();
         int cont = 0;
-        //Carros*** carro;
+        // int sizeCarros*** carro;
         opcion = menu();
         while(opcion<1 || opcion >6){
             cout<<"El número que ha ingreasado no está dentro del rango"<<endl;
@@ -50,9 +57,17 @@ int main(){
                 chasis = agregarChasis();
                 motor = agregarMotor();
                 pintura = agregarPintura();
+                matriz[cont][0] = "[P]";
+                cont++;
+                cout<<"Se ha agregado la línea de producción correctamente"<<endl;
             }else{
                 cout<<"Ya se ha alcanzado el máximo de carros modelo."<<endl;
             }
+            cout<<"-------------------------"<<endl;
+        }
+        if(opcion == 2){
+            cout<<"-------------------------"<<endl;
+            imprimirMatriz(matriz);
             cout<<"-------------------------"<<endl;
         }
         for (int i = 0; i < carro.size(); i++)
@@ -62,7 +77,7 @@ int main(){
             delete motor[i];
             delete pintura[i];
         }
-        
+        liberarMatriz(matriz);
     }while(opcion!=6);
     return 0;
 }
@@ -80,45 +95,20 @@ int menu(){
     return opcion;
 }
 
-/*Carros*** agregar(){
+/*Carros*** agregar(){carro
     Carros*** carro;
-    string modelo, tipo, configuracion,color,acabado;
-    bool transmicion, electrico;
-    int numero = 0;
-    cout<<"Ingrese el nombre del modelo: ";
-    cin>>modelo;
-    cout<<"Ingrese el tipo de ruedas: ";
-    cin>>tipo;
-    cout<<"Ingrese 1 si es automático o 2 si no es automatico";
-    int a;
-    cin>> a;
-    if(a == 1){
-        transmicion = true;
-    }else{
-        transmicion = false;
-    }
-    cout<<"Ingrese 1 si tiene un motor eléctrico o 2 si no tiene un motor eléctrico";
-    int conf;
-    cin>>conf;
-    if(conf == 1){
-        electrico = true;
-    }else{
-        electrico = false;
-    }
-    cout<<"Ingrese el color de la pintura: ";
-    cin>>color;
-    cout<<"Ingrese el acabado de la pintura: ";
-    cin>>acabado;
-    //return carro;
+        //return carro;
 }*/
 
 vector<Carros*> agregarCarro(){
     vector<Carros*> carro;
     string modelo;
-    int numero = 0;
+    int numero;
     cout<<"Ingrese el nombre del modelo: ";
     cin>>modelo;
-    carro.push_back(new Carros(modelo,0));
+    cout<<"Ingrese el número: ";
+    cin>> numero;
+    carro.push_back(new Carros(modelo,numero));
     return carro;
 }
 
@@ -128,7 +118,7 @@ vector<Chasis*> agregarChasis(){
     vector<Chasis*> chasis;
     cout<<"Ingrese el tipo de ruedas: ";
     cin>>tipo;
-    cout<<"Ingrese 1 si es automático o 2 si no es automatico";
+    cout<<"Ingrese 1 si es automático o 2 si no es automatico: ";
     int a;
     cin>> a;
     if(a == 1){
@@ -144,7 +134,7 @@ vector<Motor*> agregarMotor(){
     string  configuracion;
     bool electrico;
     vector<Motor*> motor;
-    cout<<"Ingrese 1 si tiene un motor eléctrico o 2 si no tiene un motor eléctrico";
+    cout<<"Ingrese 1 si tiene un motor eléctrico o 2 si no tiene un motor eléctrico: ";
     int conf;
     cin>>conf;
     if(conf == 1){
@@ -165,4 +155,39 @@ vector<Pintura*> agregarPintura(){
     cin>>acabado;
     pintura.push_back(new Pintura(color,acabado));
     return pintura;
+}
+
+string** mat(){
+    string** mat = new string*[5];
+    for (int i = 0; i < 5; i++)
+    {
+        mat[i] = new string[5];
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            mat[i][j] = "[ ]";
+        }
+        
+    }
+    return mat;
+}
+
+void liberarMatriz(string** mat){
+        for(int i = 0; i<5; i++){
+                delete[] mat[i];
+        }
+        delete[] mat;
+}
+
+void imprimirMatriz(string** mat){
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            cout<<mat[i][j]<<" ";
+        }
+        cout<<endl;
+    }   
 }
