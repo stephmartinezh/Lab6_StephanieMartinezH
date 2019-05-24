@@ -38,16 +38,18 @@ void imprimirMatriz(string**);
 
 void detalles(int cont, vector<Carros*>, vector<Chasis*>, vector<Motor*>, vector<Pintura*>, int);
 
+string** avanzar(string** mat, int cont);
+
 int main(){
-    int opcion, avanzar = 0;
+    int opcion, avanzar1 = 1;
     string** matriz = NULL;
     vector<Carros*> carro;
     vector<Chasis*> chasis;
     vector<Motor*> motor;
     vector<Pintura*> pintura;
     matriz = mat();
+    int cont = 0;
     do{
-        int cont = 0;
         // int sizeCarros*** carro;
         opcion = menu();
         while(opcion<1 || opcion >6){
@@ -76,7 +78,22 @@ int main(){
         }
         if(opcion == 3){
             cout<<"-------------------------"<<endl;
-            detalles(cont, carro, chasis, motor, pintura, avanzar);
+            if(avanzar == 0){
+                cout<<"No hay carros en la línea de producción"<<endl;
+            }else{
+                detalles(cont, carro, chasis, motor, pintura, avanzar1);                
+            }
+            cout<<"-------------------------"<<endl;
+        }
+        if(opcion == 4){
+            cout<<"-------------------------"<<endl;
+            cout<<"-------------------------"<<endl;
+        }
+        if(opcion == 5){
+            cout<<"-------------------------"<<endl;
+            matriz = avanzar(matriz,avanzar1);
+            avanzar1++;
+            cout<<"Se ha avanzado exitosamente"<<endl;
             cout<<"-------------------------"<<endl;
         }
         
@@ -220,4 +237,25 @@ void detalles(int cont, vector<Carros*> carro,vector<Chasis*> chasis, vector<Mot
         
     }
     
+}
+
+string** avanzar(string** mat, int cont){
+    int cont2 = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        if(mat[i][0] == "[P]"){
+            cont2++;
+        }
+    }
+
+    for (int i = 0; i < cont2; i++)
+    {
+        for (int j = 1; j <= cont; j++)
+        {
+            mat[i][j] = "[C]";
+        }
+        
+    }
+    imprimirMatriz(mat);
+    return mat;
 }
