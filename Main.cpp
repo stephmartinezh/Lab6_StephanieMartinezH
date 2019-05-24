@@ -36,8 +36,10 @@ string** mat();
 
 void imprimirMatriz(string**);
 
+void detalles(int cont, vector<Carros*>, vector<Chasis*>, vector<Motor*>, vector<Pintura*>, int);
+
 int main(){
-    int opcion;
+    int opcion, avanzar = 0;
     string** matriz = NULL;
     vector<Carros*> carro;
     vector<Chasis*> chasis;
@@ -60,7 +62,6 @@ int main(){
                 motor = agregarMotor();
                 pintura = agregarPintura();
                 matriz = llenarMatrizP(matriz, cont);
-                imprimirMatriz(matriz);
                 cont++;
                 cout<<"Se ha agregado la línea de producción correctamente"<<endl;
             }else{
@@ -71,6 +72,11 @@ int main(){
         if(opcion == 2){
             cout<<"-------------------------"<<endl;
             imprimirMatriz(matriz);
+            cout<<"-------------------------"<<endl;
+        }
+        if(opcion == 3){
+            cout<<"-------------------------"<<endl;
+            detalles(cont, carro, chasis, motor, pintura, avanzar);
             cout<<"-------------------------"<<endl;
         }
         
@@ -162,14 +168,14 @@ vector<Pintura*> agregarPintura(){
 }
 
 string** mat(){
-    string** mat = new string*[5];
-    for (int i = 0; i < 5; i++)
+    string** mat = new string*[4];
+    for (int i = 0; i < 4; i++)
     {
-        mat[i] = new string[5];
+        mat[i] = new string[4];
     }
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < 4; j++)
         {
             mat[i][j] = "[ ]";
         }
@@ -179,16 +185,16 @@ string** mat(){
 }
 
 void liberarMatriz(string** mat){
-        for(int i = 0; i<5; i++){
+        for(int i = 0; i<4; i++){
                 delete[] mat[i];
         }
         delete[] mat;
 }
 
 void imprimirMatriz(string** matriz){
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < 4; j++)
         {
             cout<<matriz[i][j]<<" ";
         }
@@ -199,4 +205,19 @@ void imprimirMatriz(string** matriz){
 string** llenarMatrizP(string** mat, int cont){
     mat[cont][0] = "[P]";
     return mat;
+}
+
+void detalles(int cont, vector<Carros*> carro,vector<Chasis*> chasis, vector<Motor*> motor, vector<Pintura*> pintura, int avanzar){
+    for (int i = 0; i < cont; i++)
+    {
+        for (int j = 0; j < avanzar; j++)
+        {
+            cout<<"Modelo: "<<carro[j]->getNombre()<<carro[j]->getNumero()+1;
+            cout<<" Tipo de ruedas: "<<chasis[j]->getTipo()<<" Transmición: "<<chasis[j]->getTransmicion();
+            cout<<" Motor: "<<motor[j]->getElectrico()<<" Configuración: "<<motor[j]->getConfiguracion();
+            cout<<" Color: "<<pintura[j]->getColor()<<" Acabado: "<<pintura[j]->getAcabado();
+        }
+        
+    }
+    
 }
