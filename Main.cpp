@@ -256,6 +256,5 @@ string** avanzar(string** mat, int cont){
         }
         
     }
-    imprimirMatriz(mat);
     return mat;
 }
